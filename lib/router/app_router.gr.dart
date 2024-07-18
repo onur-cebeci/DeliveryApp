@@ -15,6 +15,12 @@ abstract class _$AppRouter extends RootStackRouter {
 
   @override
   final Map<String, PageFactory> pagesMap = {
+    ActiveJobsMessageRoute.name: (routeData) {
+      return AutoRoutePage<dynamic>(
+        routeData: routeData,
+        child: const ActiveJobsMessageScreen(),
+      );
+    },
     HomeDetailRoute.name: (routeData) {
       final args = routeData.argsAs<HomeDetailRouteArgs>();
       return AutoRoutePage<dynamic>(
@@ -32,6 +38,20 @@ abstract class _$AppRouter extends RootStackRouter {
       );
     },
   };
+}
+
+/// generated route for
+/// [ActiveJobsMessageScreen]
+class ActiveJobsMessageRoute extends PageRouteInfo<void> {
+  const ActiveJobsMessageRoute({List<PageRouteInfo>? children})
+      : super(
+          ActiveJobsMessageRoute.name,
+          initialChildren: children,
+        );
+
+  static const String name = 'ActiveJobsMessageRoute';
+
+  static const PageInfo<void> page = PageInfo<void>(name);
 }
 
 /// generated route for

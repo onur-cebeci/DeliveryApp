@@ -1,12 +1,8 @@
 import 'package:delivery_app/controller/riverpod_menagement.dart';
-import 'package:delivery_app/models/jobs_models/jobs_model.dart';
+import 'package:delivery_app/screens/active_jobs_screens/active_jobs_screen.dart';
 import 'package:delivery_app/utils/constant.dart';
-import 'package:delivery_app/utils/custom_theme_data.dart';
-import 'package:delivery_app/utils/extensions.dart';
-import 'package:delivery_app/utils/fonts.dart';
 import 'package:delivery_app/widgets/custom_app_bar.dart';
 import 'package:delivery_app/widgets/home_screen_body_card.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -16,6 +12,7 @@ class HomeScreenBody extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     var read = ref.read(homeScreenController);
+    var readBottomController = ref.watch(bottomNavBarController);
 
     return Scaffold(
       appBar: const CustomAppBar(pageName: AppConstant.homeScreenBodyTitle),
@@ -25,12 +22,11 @@ class HomeScreenBody extends ConsumerWidget {
         itemBuilder: (context, index) {
           var currentIndex = read.jobsList[index];
 
-          return HomeScreenBodyCard(currentIndex: currentIndex);
+          return readBottomController.acceptedList.isEmpty
+              ? HomeScreenBodyCard(currentIndex: currentIndex)
+              : const ActiveJobsScreen();
         },
       )),
     );
   }
 }
-
-
-//CustomListTile(currentIndex: currentIndex)

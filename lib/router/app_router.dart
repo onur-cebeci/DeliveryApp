@@ -1,5 +1,6 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:delivery_app/models/jobs_models/jobs_model.dart';
+import 'package:delivery_app/screens/active_jobs_screens/active_jobs_message_screen.dart';
 import 'package:delivery_app/screens/home_screens/home_screen.dart';
 import 'package:delivery_app/screens/home_screens/home_screen_detail.dart';
 import 'package:flutter/material.dart';
@@ -13,7 +14,8 @@ class AppRouter extends _$AppRouter {
         AutoRoute(page: HomeRoute.page, initial: true),
         AutoRoute(
           page: HomeDetailRoute.page,
-        )
+        ),
+        AutoRoute(page: ActiveJobsMessageRoute.page),
       ];
 }
 

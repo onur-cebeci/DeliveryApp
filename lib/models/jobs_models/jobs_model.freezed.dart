@@ -34,7 +34,8 @@ mixin _$JobsModel {
   String get beginDate => throw _privateConstructorUsedError;
   String get endDate => throw _privateConstructorUsedError;
   String get advertiser => throw _privateConstructorUsedError;
-  String get mapCooordinate => throw _privateConstructorUsedError;
+  double get mapLat => throw _privateConstructorUsedError;
+  double get mapLng => throw _privateConstructorUsedError;
   bool get isDone => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
@@ -63,7 +64,8 @@ abstract class $JobsModelCopyWith<$Res> {
       String beginDate,
       String endDate,
       String advertiser,
-      String mapCooordinate,
+      double mapLat,
+      double mapLng,
       bool isDone});
 }
 
@@ -94,7 +96,8 @@ class _$JobsModelCopyWithImpl<$Res, $Val extends JobsModel>
     Object? beginDate = null,
     Object? endDate = null,
     Object? advertiser = null,
-    Object? mapCooordinate = null,
+    Object? mapLat = null,
+    Object? mapLng = null,
     Object? isDone = null,
   }) {
     return _then(_value.copyWith(
@@ -154,10 +157,14 @@ class _$JobsModelCopyWithImpl<$Res, $Val extends JobsModel>
           ? _value.advertiser
           : advertiser // ignore: cast_nullable_to_non_nullable
               as String,
-      mapCooordinate: null == mapCooordinate
-          ? _value.mapCooordinate
-          : mapCooordinate // ignore: cast_nullable_to_non_nullable
-              as String,
+      mapLat: null == mapLat
+          ? _value.mapLat
+          : mapLat // ignore: cast_nullable_to_non_nullable
+              as double,
+      mapLng: null == mapLng
+          ? _value.mapLng
+          : mapLng // ignore: cast_nullable_to_non_nullable
+              as double,
       isDone: null == isDone
           ? _value.isDone
           : isDone // ignore: cast_nullable_to_non_nullable
@@ -189,7 +196,8 @@ abstract class _$$JobsModelImplCopyWith<$Res>
       String beginDate,
       String endDate,
       String advertiser,
-      String mapCooordinate,
+      double mapLat,
+      double mapLng,
       bool isDone});
 }
 
@@ -218,7 +226,8 @@ class __$$JobsModelImplCopyWithImpl<$Res>
     Object? beginDate = null,
     Object? endDate = null,
     Object? advertiser = null,
-    Object? mapCooordinate = null,
+    Object? mapLat = null,
+    Object? mapLng = null,
     Object? isDone = null,
   }) {
     return _then(_$JobsModelImpl(
@@ -278,10 +287,14 @@ class __$$JobsModelImplCopyWithImpl<$Res>
           ? _value.advertiser
           : advertiser // ignore: cast_nullable_to_non_nullable
               as String,
-      mapCooordinate: null == mapCooordinate
-          ? _value.mapCooordinate
-          : mapCooordinate // ignore: cast_nullable_to_non_nullable
-              as String,
+      mapLat: null == mapLat
+          ? _value.mapLat
+          : mapLat // ignore: cast_nullable_to_non_nullable
+              as double,
+      mapLng: null == mapLng
+          ? _value.mapLng
+          : mapLng // ignore: cast_nullable_to_non_nullable
+              as double,
       isDone: null == isDone
           ? _value.isDone
           : isDone // ignore: cast_nullable_to_non_nullable
@@ -308,7 +321,8 @@ class _$JobsModelImpl implements _JobsModel {
       required this.beginDate,
       required this.endDate,
       required this.advertiser,
-      required this.mapCooordinate,
+      required this.mapLat,
+      required this.mapLng,
       this.isDone = false});
 
   factory _$JobsModelImpl.fromJson(Map<String, dynamic> json) =>
@@ -343,14 +357,16 @@ class _$JobsModelImpl implements _JobsModel {
   @override
   final String advertiser;
   @override
-  final String mapCooordinate;
+  final double mapLat;
+  @override
+  final double mapLng;
   @override
   @JsonKey()
   final bool isDone;
 
   @override
   String toString() {
-    return 'JobsModel(title: $title, desc: $desc, packageLocation: $packageLocation, targetLocation: $targetLocation, id: $id, state: $state, price: $price, sum: $sum, productType: $productType, address: $address, phone: $phone, beginDate: $beginDate, endDate: $endDate, advertiser: $advertiser, mapCooordinate: $mapCooordinate, isDone: $isDone)';
+    return 'JobsModel(title: $title, desc: $desc, packageLocation: $packageLocation, targetLocation: $targetLocation, id: $id, state: $state, price: $price, sum: $sum, productType: $productType, address: $address, phone: $phone, beginDate: $beginDate, endDate: $endDate, advertiser: $advertiser, mapLat: $mapLat, mapLng: $mapLng, isDone: $isDone)';
   }
 
   @override
@@ -377,8 +393,8 @@ class _$JobsModelImpl implements _JobsModel {
             (identical(other.endDate, endDate) || other.endDate == endDate) &&
             (identical(other.advertiser, advertiser) ||
                 other.advertiser == advertiser) &&
-            (identical(other.mapCooordinate, mapCooordinate) ||
-                other.mapCooordinate == mapCooordinate) &&
+            (identical(other.mapLat, mapLat) || other.mapLat == mapLat) &&
+            (identical(other.mapLng, mapLng) || other.mapLng == mapLng) &&
             (identical(other.isDone, isDone) || other.isDone == isDone));
   }
 
@@ -400,7 +416,8 @@ class _$JobsModelImpl implements _JobsModel {
       beginDate,
       endDate,
       advertiser,
-      mapCooordinate,
+      mapLat,
+      mapLng,
       isDone);
 
   @JsonKey(ignore: true)
@@ -433,7 +450,8 @@ abstract class _JobsModel implements JobsModel {
       required final String beginDate,
       required final String endDate,
       required final String advertiser,
-      required final String mapCooordinate,
+      required final double mapLat,
+      required final double mapLng,
       final bool isDone}) = _$JobsModelImpl;
 
   factory _JobsModel.fromJson(Map<String, dynamic> json) =
@@ -468,7 +486,9 @@ abstract class _JobsModel implements JobsModel {
   @override
   String get advertiser;
   @override
-  String get mapCooordinate;
+  double get mapLat;
+  @override
+  double get mapLng;
   @override
   bool get isDone;
   @override

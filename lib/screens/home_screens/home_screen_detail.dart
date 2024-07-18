@@ -1,110 +1,96 @@
 import 'package:auto_route/auto_route.dart';
+import 'package:delivery_app/controller/riverpod_menagement.dart';
 import 'package:delivery_app/models/jobs_models/jobs_model.dart';
+import 'package:delivery_app/router/app_router.dart';
 import 'package:delivery_app/utils/constant.dart';
 import 'package:delivery_app/utils/custom_theme_data.dart';
 import 'package:delivery_app/utils/fonts.dart';
 import 'package:delivery_app/widgets/custom_app_bar.dart';
+import 'package:delivery_app/widgets/information_card.dart';
+import 'package:delivery_app/widgets/map_card.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 @RoutePage()
-class HomeDetailScreen extends ConsumerWidget {
+class HomeDetailScreen extends ConsumerStatefulWidget {
   const HomeDetailScreen({required this.jobsModel, super.key});
   final JobsModel jobsModel;
+  @override
+  ConsumerState<HomeDetailScreen> createState() => _HomeDetailScreenState();
+}
+
+class _HomeDetailScreenState extends ConsumerState<HomeDetailScreen> {
+  @override
+  void initState() {
+    super.initState();
+
+    getRouteList();
+  }
+
+  Future<void> getRouteList() async {
+    await ref.read(mapController).getMapService(model: widget.jobsModel);
+  }
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
+  Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
+
     return Scaffold(
+      bottomNavigationBar: CustomBottonBarButton(model: widget.jobsModel),
       backgroundColor: Colors.white,
       appBar: const CustomAppBar(
-        pageName: 'İlan Detay',
+        pageName: AppConstant.homeScreenDetailTitle,
       ),
-      body: Column(
-        mainAxisAlignment: MainAxisAlignment.start,
-        crossAxisAlignment: CrossAxisAlignment.center,
-        children: [
-          Container(
-            width: size.width,
-            padding: const EdgeInsets.all(AppConstant.padding10),
-            margin: const EdgeInsets.all(AppConstant.padding10),
-            decoration: BoxDecoration(boxShadow: const [
-              BoxShadow(
-                  color: CustomThemeData.primaryColor,
-                  blurRadius: 5,
-                  spreadRadius: 2,
-                  blurStyle: BlurStyle.outer)
-            ], borderRadius: BorderRadius.circular(AppConstant.padding10)),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                CustomRichTextWidget(
-                  title: "Konum",
-                  content: jobsModel.packageLocation,
-                ),
-                CustomRichTextWidget(
-                  title: "Hedef Konum",
-                  content: jobsModel.targetLocation,
-                ),
-                CustomRichTextWidget(
-                  title: "Açıklama",
-                  content: jobsModel.desc,
-                ),
-                CustomRichTextWidget(
-                  title: "Fiyat",
-                  content: jobsModel.price,
-                ),
-                CustomRichTextWidget(
-                  title: "Adet",
-                  content: jobsModel.sum,
-                ),
-                CustomRichTextWidget(
-                  title: "Kargo Tipi",
-                  content: jobsModel.productType,
-                ),
-                CustomRichTextWidget(
-                  title: "Adres",
-                  content: jobsModel.address,
-                ),
-                CustomRichTextWidget(
-                  title: "İletişim",
-                  content: jobsModel.phone,
-                ),
-                CustomRichTextWidget(
-                  title: "İlan Sahibi",
-                  content: jobsModel.advertiser,
-                ),
-              ],
-            ),
+      body: SafeArea(
+        child: SingleChildScrollView(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.start,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              InformationCard(size: size, widget: widget),
+              MapCard(
+                  height: size.height / 2,
+                  width: size.width - 30,
+                  widget: widget.jobsModel),
+            ],
           ),
-        ],
+        ),
       ),
     );
   }
 }
 
-class CustomRichTextWidget extends StatelessWidget {
-  const CustomRichTextWidget({
+class CustomBottonBarButton extends ConsumerWidget {
+  const CustomBottonBarButton({
+    required this.model,
     super.key,
-    required this.content,
-    required this.title,
   });
-
-  final String content;
-  final String title;
-
+  final JobsModel model;
   @override
-  Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.only(bottom: AppConstant.padding5),
-      child: RichText(
-        text: TextSpan(children: [
-          TextSpan(
-              text: "$title : ",
-              style: customFont15Bold.copyWith(
-                  color: CustomThemeData.primaryColor)),
-          TextSpan(text: content, style: customFont15),
-        ]),
+  Widget build(BuildContext context, WidgetRef ref) {
+    var read = ref.read(bottomNavBarController);
+
+    return GestureDetector(
+      onTap: () {
+        context.router.pushAndPopUntil(
+          const HomeRoute(),
+          predicate: (_) => false,
+        );
+        read.getAccceptedList(model: model, context: context);
+      },
+      child: Container(
+        padding: const EdgeInsets.all(AppConstant.padding10),
+        margin: const EdgeInsets.all(AppConstant.padding5),
+        decoration: BoxDecoration(
+            color: CustomThemeData.primaryColor,
+            borderRadius: BorderRadius.circular(AppConstant.padding5),
+            border: Border.all(color: CustomThemeData.whiteColor)),
+        child: Text(
+          'Kabul Et',
+          textAlign: TextAlign.center,
+          style:
+              customFont18SemiBold.copyWith(color: CustomThemeData.whiteColor),
+        ),
       ),
     );
   }
