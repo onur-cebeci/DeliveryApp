@@ -22,7 +22,8 @@ _$JobsModelImpl _$$JobsModelImplFromJson(Map<String, dynamic> json) =>
       beginDate: json['beginDate'] as String,
       endDate: json['endDate'] as String,
       advertiser: json['advertiser'] as String,
-      mapCooordinate: json['mapCooordinate'] as String,
+      mapLat: (json['mapLat'] as num).toDouble(),
+      mapLng: (json['mapLng'] as num).toDouble(),
       isDone: json['isDone'] as bool? ?? false,
     );
 
@@ -42,6 +43,7 @@ Map<String, dynamic> _$$JobsModelImplToJson(_$JobsModelImpl instance) =>
       'beginDate': instance.beginDate,
       'endDate': instance.endDate,
       'advertiser': instance.advertiser,
-      'mapCooordinate': instance.mapCooordinate,
+      'mapLat': instance.mapLat,
+      'mapLng': instance.mapLng,
       'isDone': instance.isDone,
     };

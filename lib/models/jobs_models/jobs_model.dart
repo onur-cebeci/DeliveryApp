@@ -20,7 +20,8 @@ class JobsModel with _$JobsModel {
       required String beginDate,
       required String endDate,
       required String advertiser,
-      required String mapCooordinate,
+      required double mapLat,
+      required double mapLng,
       @Default(false) bool isDone}) = _JobsModel;
 
   factory JobsModel.fromJson(Map<String, dynamic> json) =>
