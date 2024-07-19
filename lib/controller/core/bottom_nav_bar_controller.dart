@@ -12,7 +12,7 @@ class BottomNavBarController extends ChangeNotifier {
         icon: Icon(CupertinoIcons.home), label: 'Ana Sayfa'),
     BottomNavigationBarItem(icon: Icon(CupertinoIcons.map), label: 'Harita'),
     BottomNavigationBarItem(
-        icon: Icon(CupertinoIcons.person_fill), label: 'Profile')
+        icon: Icon(CupertinoIcons.person_fill), label: 'Profil')
   ];
 
   int currentIndex = 0;

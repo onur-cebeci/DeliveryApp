@@ -59,3 +59,55 @@ class MapCard extends ConsumerWidget {
     );
   }
 }
+
+class MapScreenCard extends ConsumerWidget {
+  const MapScreenCard({
+    super.key,
+    required this.height,
+    required this.width,
+  });
+
+  final double height;
+  final double width;
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    var watch = ref.watch(mapController);
+    var read = ref.read(mapController);
+
+    return SizedBox(
+      height: height,
+      width: width,
+      child: FlutterMap(
+        options: MapOptions(
+            initialCenter: LatLng(read.latitude, read.latitude),
+            initialZoom: 14.0),
+        children: [
+          TileLayer(
+            urlTemplate: AppConstant.mapUrl,
+          ),
+          PolylineLayer(
+            polylines: [
+              Polyline(
+                  points: watch.routerPointsList,
+                  color: Colors.blue,
+                  strokeWidth: 5),
+            ],
+          ),
+          MarkerLayer(
+            markers: [
+              Marker(
+                point: LatLng(read.latitude, read.latitude),
+                child: const Icon(
+                  Icons.pin_drop,
+                  color: Colors.blue,
+                  size: 22,
+                ),
+              ),
+            ],
+          ),
+        ],
+      ),
+    );
+  }
+}
