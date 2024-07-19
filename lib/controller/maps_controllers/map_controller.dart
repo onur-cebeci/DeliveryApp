@@ -12,18 +12,23 @@ class MapController extends ChangeNotifier {
 
 //
   List<LatLng> routerPointsList = [];
-  Position? _position;
+  Position? position;
+  double latitude = 38.510505;
+  double longitude = 27.675583;
   void getPosition({required Position value}) {
-    _position = value;
+    position = value;
   }
 
   Future<void> getMapService({required JobsModel model}) async {
     status = MapStatus.loading;
 
+    latitude = position?.latitude != null ? position!.latitude : 38.510505;
+    longitude = position?.longitude != null ? position!.longitude : 27.675583;
+
     var list = await service.getMapRoute(
       model: model,
-      startLat: _position!.latitude,
-      startLng: _position!.longitude,
+      startLat: latitude,
+      startLng: longitude,
     );
 
     routerPointsList = list;
@@ -37,7 +42,6 @@ class MapController extends ChangeNotifier {
     bool serviceEnabled;
     LocationPermission permission;
 
-    // Test if location services are enabled.
     serviceEnabled = await Geolocator.isLocationServiceEnabled();
     if (!serviceEnabled) {
       return Future.error('Konum hizmeti devre dışı');
@@ -57,12 +61,12 @@ class MapController extends ChangeNotifier {
 
     LocationSettings locationSettings = const LocationSettings(
       accuracy: LocationAccuracy.high,
-      distanceFilter: 10,
+      distanceFilter: 50,
     );
 
     Geolocator.getPositionStream(locationSettings: locationSettings)
         .listen((Position position) {
-      _position = position;
+      position = position;
       notifyListeners();
     });
   }

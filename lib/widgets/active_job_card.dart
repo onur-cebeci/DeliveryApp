@@ -8,8 +8,9 @@ import 'package:delivery_app/utils/fonts.dart';
 import 'package:delivery_app/widgets/custom_show_dialog.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-class ActiveJobCard extends StatelessWidget {
+class ActiveJobCard extends ConsumerWidget {
   const ActiveJobCard({
     super.key,
     required this.read,
@@ -18,7 +19,7 @@ class ActiveJobCard extends StatelessWidget {
   final BottomNavBarController read;
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     return Container(
       margin: const EdgeInsets.all(
         AppConstant.padding15,
@@ -100,11 +101,13 @@ class ActiveJobCard extends StatelessWidget {
               InkWell(
                 onTap: () {
                   CustomShowDialog.showCodeMessage(
-                      height: context.dynamicHeight(0.4),
-                      width: context.dynamicWidth(0.8),
-                      context,
-                      title: AppConstant.deliveryMessageTitle,
-                      subtitle: AppConstant.deliveryMessageSubTitle);
+                    height: context.dynamicHeight(0.4),
+                    width: context.dynamicWidth(0.8),
+                    context,
+                    title: AppConstant.deliveryMessageTitle,
+                    subtitle: AppConstant.deliveryMessageSubTitle,
+                    ref: ref,
+                  );
                 },
                 child: Container(
                   padding: const EdgeInsets.symmetric(
