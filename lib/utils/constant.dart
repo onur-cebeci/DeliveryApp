@@ -16,6 +16,8 @@ final class AppConstant {
   static const activeJobsScreenTitle = 'Onaylanan İş';
   static const homeScreenDetailTitle = 'İlan Detay';
   static const costumerMessageScreenTitle = 'Mesaj Ekranı';
+  static const currentLocationTitle = 'Şuanki Konumum';
+  static const profileTitle = 'Profil';
 
   //Paddings
   static const extraLargePadding = 40.0;
