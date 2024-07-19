@@ -16,6 +16,11 @@
         android:label="delivery_app"
         android:name="${applicationName}"
         android:icon="@mipmap/ic_launcher">
+
+        <service
+        android:name=".LocationService"
+        android:foregroundServiceType="location"
+        android:permission="android.permission.BIND_JOB_SERVICE" />
         <activity
             android:name=".MainActivity"
             android:exported="true"

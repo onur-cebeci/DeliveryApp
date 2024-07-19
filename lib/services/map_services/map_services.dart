@@ -8,9 +8,13 @@ import 'package:http/http.dart' as http;
 import 'package:latlong2/latlong.dart';
 
 class MapServices {
-  Future<List<LatLng>> getMapRoute({required JobsModel model}) async {
+  Future<List<LatLng>> getMapRoute({
+    required JobsModel model,
+    required double startLat,
+    required double startLng,
+  }) async {
     List<LatLng> routerPoints = [];
-    final LatLng startPoint = LatLng(38.487375, 27.652417);
+    final LatLng startPoint = LatLng(startLat, startLat);
     final LatLng endPoint = LatLng(model.mapLat, model.mapLng);
     var url = Uri.parse(
         'https://api.openrouteservice.org/v2/directions/driving-car?api_key=${AppConstant.openRouteServiceApiKey}&start=${startPoint.longitude},${startPoint.latitude}&end=${endPoint.longitude},${endPoint.latitude}');
@@ -21,7 +25,6 @@ class MapServices {
       routerPoints = [];
       var router =
           jsonDecode(res.body)['features'][0]['geometry']['coordinates'];
-      print('Router Service' + '$router');
 
       for (var i = 0; i < router.length; i++) {
         var reep = router[i].toString();

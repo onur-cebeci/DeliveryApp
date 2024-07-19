@@ -1,5 +1,6 @@
 import 'package:delivery_app/controller/riverpod_menagement.dart';
 import 'package:delivery_app/models/jobs_models/jobs_model.dart';
+import 'package:delivery_app/utils/constant.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_map/flutter_map.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -30,7 +31,7 @@ class MapCard extends ConsumerWidget {
             initialZoom: 6.0),
         children: [
           TileLayer(
-            urlTemplate: 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
+            urlTemplate: AppConstant.mapUrl,
           ),
           PolylineLayer(
             polylines: [
@@ -40,14 +41,14 @@ class MapCard extends ConsumerWidget {
                   strokeWidth: 5),
             ],
           ),
-          const MarkerLayer(
+          MarkerLayer(
             markers: [
               Marker(
-                point: LatLng(41.008237, 28.978358),
-                child: Icon(
+                point: LatLng(widget.mapLat, widget.mapLng),
+                child: const Icon(
                   Icons.flag,
                   color: Colors.blue,
-                  size: 35,
+                  size: 22,
                 ),
               ),
             ],
