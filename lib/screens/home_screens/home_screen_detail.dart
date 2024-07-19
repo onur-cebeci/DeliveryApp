@@ -4,8 +4,10 @@ import 'package:delivery_app/models/jobs_models/jobs_model.dart';
 import 'package:delivery_app/router/app_router.dart';
 import 'package:delivery_app/utils/constant.dart';
 import 'package:delivery_app/utils/custom_theme_data.dart';
+import 'package:delivery_app/utils/extensions.dart';
 import 'package:delivery_app/utils/fonts.dart';
 import 'package:delivery_app/widgets/custom_app_bar.dart';
+import 'package:delivery_app/widgets/custom_show_dialog.dart';
 import 'package:delivery_app/widgets/information_card.dart';
 import 'package:delivery_app/widgets/map_card.dart';
 import 'package:flutter/material.dart';
@@ -37,7 +39,7 @@ class _HomeDetailScreenState extends ConsumerState<HomeDetailScreen> {
 
     return Scaffold(
       bottomNavigationBar: CustomBottonBarButton(model: widget.jobsModel),
-      backgroundColor: Colors.white,
+      backgroundColor: CustomThemeData.whiteColor,
       appBar: const CustomAppBar(
         pageName: AppConstant.homeScreenDetailTitle,
       ),
@@ -72,11 +74,17 @@ class CustomBottonBarButton extends ConsumerWidget {
 
     return GestureDetector(
       onTap: () {
-        context.router.pushAndPopUntil(
-          const HomeRoute(),
-          predicate: (_) => false,
-        );
-        read.getAccceptedList(model: model, context: context);
+        CustomShowDialog.showMessage(context,
+            title: AppConstant.deliveyRulesTitle,
+            subtitle: AppConstant.deliveyRulesSubTitle,
+            height: context.dynamicHeight(0.4),
+            width: context.dynamicWidth(0.8), onTap: () {
+          context.router.pushAndPopUntil(
+            const HomeRoute(),
+            predicate: (_) => false,
+          );
+          read.getAccceptedList(model: model, context: context);
+        });
       },
       child: Container(
         padding: const EdgeInsets.all(AppConstant.padding10),
@@ -86,7 +94,7 @@ class CustomBottonBarButton extends ConsumerWidget {
             borderRadius: BorderRadius.circular(AppConstant.padding5),
             border: Border.all(color: CustomThemeData.whiteColor)),
         child: Text(
-          'Kabul Et',
+          AppConstant.accept,
           textAlign: TextAlign.center,
           style:
               customFont18SemiBold.copyWith(color: CustomThemeData.whiteColor),

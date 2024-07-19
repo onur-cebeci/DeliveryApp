@@ -3,7 +3,9 @@ import 'package:delivery_app/controller/core/bottom_nav_bar_controller.dart';
 import 'package:delivery_app/router/app_router.dart';
 import 'package:delivery_app/utils/constant.dart';
 import 'package:delivery_app/utils/custom_theme_data.dart';
+import 'package:delivery_app/utils/extensions.dart';
 import 'package:delivery_app/utils/fonts.dart';
+import 'package:delivery_app/widgets/custom_show_dialog.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
@@ -44,7 +46,7 @@ class ActiveJobCard extends StatelessWidget {
                     horizontal: AppConstant.padding15,
                     vertical: AppConstant.padding5),
                 decoration: BoxDecoration(
-                    color: Colors.blue,
+                    color: CustomThemeData.blueColor,
                     borderRadius: BorderRadius.circular(AppConstant.padding10)),
                 child: const Text(
                   "Devam Ediyor",
@@ -95,11 +97,28 @@ class ActiveJobCard extends StatelessWidget {
           const SizedBox(height: AppConstant.padding10),
           Row(
             children: [
-              const Icon(Icons.person),
-              Text(
-                read.acceptedList.first.advertiser,
-                style: customFont15Bold.copyWith(
-                    color: CustomThemeData.primaryColor),
+              InkWell(
+                onTap: () {
+                  CustomShowDialog.showCodeMessage(
+                      height: context.dynamicHeight(0.4),
+                      width: context.dynamicWidth(0.8),
+                      context,
+                      title: AppConstant.deliveryMessageTitle,
+                      subtitle: AppConstant.deliveryMessageSubTitle);
+                },
+                child: Container(
+                  padding: const EdgeInsets.symmetric(
+                      horizontal: AppConstant.padding15,
+                      vertical: AppConstant.padding5),
+                  decoration: BoxDecoration(
+                      color: CustomThemeData.primaryColor,
+                      borderRadius:
+                          BorderRadius.circular(AppConstant.padding10)),
+                  child: const Text(
+                    AppConstant.deliveryCode,
+                    style: customFont12Secondary,
+                  ),
+                ),
               ),
               const Spacer(),
               Padding(
@@ -119,7 +138,7 @@ class ActiveJobCard extends StatelessWidget {
                               borderRadius:
                                   BorderRadius.circular(AppConstant.padding10)),
                           child: const Text(
-                            "Mesaj",
+                            AppConstant.text,
                             style: customFont12Secondary,
                           ),
                         ),
@@ -127,11 +146,18 @@ class ActiveJobCard extends StatelessWidget {
                       const SizedBox(width: AppConstant.padding5),
                       InkWell(
                         onTap: () {
-                          read.removeAccceptedList();
-                          context.router.pushAndPopUntil(
-                            const HomeRoute(),
-                            predicate: (_) => false,
-                          );
+                          CustomShowDialog.showMessage(
+                              height: context.dynamicHeight(0.4),
+                              width: context.dynamicWidth(0.8),
+                              context,
+                              title: AppConstant.revoke,
+                              subtitle: AppConstant.revokeSubTitle, onTap: () {
+                            read.removeAccceptedList();
+                            context.router.pushAndPopUntil(
+                              const HomeRoute(),
+                              predicate: (_) => false,
+                            );
+                          });
                         },
                         child: Container(
                           padding: const EdgeInsets.symmetric(
@@ -142,7 +168,7 @@ class ActiveJobCard extends StatelessWidget {
                               borderRadius:
                                   BorderRadius.circular(AppConstant.padding10)),
                           child: const Text(
-                            "İptal Et",
+                            AppConstant.revoke,
                             style: customFont12Secondary,
                           ),
                         ),

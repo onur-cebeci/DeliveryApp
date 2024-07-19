@@ -13,7 +13,7 @@ class CustomThemeData {
   static const Color blackColor = Color(0xff000000);
   static const Color blackColorLight = Color(0xff595959);
 
-  static const Color blueColor = Color(0xff515C6F);
+  static const Color blueColor = Color(0xFF2196F3);
   static const Color blueColorDark = Color(0xff061434);
 
   static ThemeData customLightTheme = ThemeData(
