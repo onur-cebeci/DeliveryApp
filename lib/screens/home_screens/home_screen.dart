@@ -9,6 +9,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_foreground_task/flutter_foreground_task.dart';
 import 'package:geolocator/geolocator.dart';
+import 'package:permission_handler/permission_handler.dart';
 
 @RoutePage()
 class HomeScreen extends ConsumerStatefulWidget {
@@ -29,25 +30,30 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
   }
 
   Future<void> _initForegroundTask() async {
-    bool started = await FlutterForegroundTask.startService(
-      notificationTitle: 'Location Tracking',
-      notificationText: 'Your location is being tracked in the background',
-      callback: startCallback,
-    );
-    if (started) {
-      _receivePort = FlutterForegroundTask.receivePort;
+    var status = await Permission.locationWhenInUse.status;
+    if (!status.isGranted) {
+      await Permission.locationWhenInUse.request();
+    } else {
+      bool started = await FlutterForegroundTask.startService(
+        notificationTitle: 'Konum Takibi',
+        notificationText: 'Konumunuz arka planda takip ediliyor',
+        callback: startCallback,
+      );
+      if (started) {
+        _receivePort = FlutterForegroundTask.receivePort;
+        _receivePort?.listen((message) {
+          if (message is Position) {
+            ref.read(mapController).getPosition(value: message);
+          }
+        });
+      }
+
       _receivePort?.listen((message) {
         if (message is Position) {
           ref.read(mapController).getPosition(value: message);
         }
       });
     }
-
-    _receivePort?.listen((message) {
-      if (message is Position) {
-        ref.read(mapController).getPosition(value: message);
-      }
-    });
   }
 
   static void startCallback() {

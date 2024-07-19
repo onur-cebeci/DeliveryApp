@@ -25,6 +25,7 @@ class MapServices {
       routerPoints = [];
       var router =
           jsonDecode(res.body)['features'][0]['geometry']['coordinates'];
+      print('Router Service' '$router');
 
       for (var i = 0; i < router.length; i++) {
         var reep = router[i].toString();

@@ -1,11 +1,13 @@
-//
 import 'package:auto_route/auto_route.dart';
+import 'package:delivery_app/controller/riverpod_menagement.dart';
+import 'package:delivery_app/router/app_router.dart';
 import 'package:delivery_app/utils/constant.dart';
 import 'package:delivery_app/utils/custom_theme_data.dart';
 import 'package:delivery_app/utils/extensions.dart';
 import 'package:delivery_app/utils/fonts.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 class CustomShowDialog {
   CustomShowDialog.showCodeMessage(BuildContext context,
@@ -13,6 +15,7 @@ class CustomShowDialog {
       required String subtitle,
       required double height,
       required double width,
+      required WidgetRef ref,
       IconData iconData = Icons.done}) {
     Size size = MediaQuery.of(context).size;
 
@@ -78,7 +81,13 @@ class CustomShowDialog {
                           child: const Text(AppConstant.iAcceptV2),
                           onPressed: () {
                             if (formKey.currentState!.validate()) {
-                              context.router.popForced();
+                              ref
+                                  .read(activeJobsController)
+                                  .getIsArrive(v: true);
+                              context.router.pushAndPopUntil(
+                                const HomeRoute(),
+                                predicate: (_) => false,
+                              );
                             }
                           },
                         ),
@@ -114,13 +123,13 @@ class CustomShowDialog {
       IconData iconData = Icons.done}) {
     Size size = MediaQuery.of(context).size;
 
-    final _formKey = GlobalKey<FormState>();
+    final formKey = GlobalKey<FormState>();
     showDialog(
       context: context,
       barrierDismissible: true,
       builder: (BuildContext context) {
         return Form(
-          key: _formKey,
+          key: formKey,
           child: Center(
             child: SizedBox(
               width: width,

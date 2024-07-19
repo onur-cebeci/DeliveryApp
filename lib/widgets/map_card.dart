@@ -21,13 +21,14 @@ class MapCard extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     var watch = ref.watch(mapController);
+    var read = ref.read(mapController);
 
     return SizedBox(
       height: height,
       width: width,
       child: FlutterMap(
         options: MapOptions(
-            initialCenter: LatLng(widget.mapLat, widget.mapLng),
+            initialCenter: LatLng(read.latitude, read.longitude),
             initialZoom: 6.0),
         children: [
           TileLayer(
